@@ -1,26 +1,17 @@
-import itertools
-import operator
+def counter(l):
+    i = 0;
+    while i < len(l):
+        word = l[i]
+        number = l.count(word)
+        print("word: %r\t %r \n" % (word, number))
+        l = remove_value(l,word)
+        i += 1
 
-def most_common(L):
-  # get an iterable of (item, iterable) pairs
-  SL = sorted((x, i) for i, x in enumerate(L))
-  # print 'SL:', SL
-  groups = itertools.groupby(SL, key=operator.itemgetter(0))
-  # auxiliary function to get "quality" for an item
-  def _auxfun(g):
-    item, iterable = g
-    count = 0
-    min_index = len(L)
-    for _, where in iterable:
-      count += 1
-      min_index = min(min_index, where)
-    # print 'item %r, count %r, minind %r' % (item, count, min_index)
-    return count, -min_index
-  # pick the highest-count/earliest item
-  return max(groups, key=_auxfun)[0]
+def remove_value(l,value):
+    return [val for val in l if val != value]
 
 def read_words(words_file):
-    return [word for line in open(plot.list, 'r') for word in line.split()]
+    return [word for line in open(words_file, 'r') for word in line.split()]
 
-List = read_words
-most_common(List)
+List = read_words("quotes.list")
+counter(List)
